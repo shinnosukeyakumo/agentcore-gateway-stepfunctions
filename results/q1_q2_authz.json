@@ -1,0 +1,112 @@
+{
+  "tools": [
+    {
+      "name": "refund___DescribeExecution",
+      "params": [
+        "executionArn",
+        "includedData"
+      ],
+      "description": "Provides information about a state machine execution, such as its status, start and stop times, input, and output. Standard workflows only; Express executions c"
+    },
+    {
+      "name": "refund___DescribeStateMachine",
+      "params": [
+        "includedData"
+      ],
+      "description": "Provides information about a state machine's definition, its IAM role Amazon Resource Name (ARN), and configuration. Returns metadata only by default (includedD"
+    },
+    {
+      "name": "refund___GetExecutionHistory",
+      "params": [
+        "executionArn"
+      ],
+      "description": "Returns the history of the specified execution as a list of events. By default, the results are returned in ascending order of the timeStamp of the events. Stan"
+    },
+    {
+      "name": "refund___ListExecutions",
+      "params": [
+        "statusFilter"
+      ],
+      "description": "Lists all executions of a state machine. Standard workflows only; fails with StateMachineTypeNotSupported on an Express state machine."
+    },
+    {
+      "name": "refund___StartExecution",
+      "params": [
+        "input"
+      ],
+      "description": "返金ワークフローを開始する。顧客が返金を求めたときだけ使う。input は {\"orderId\": \"ORD-xxxx\", \"reason\": \"理由\"} の JSON 文字列。返金の可否と承認要否はワークフローが判定する。"
+    },
+    {
+      "name": "refund___StopExecution",
+      "params": [
+        "executionArn"
+      ],
+      "description": "Stops a running execution. Standard workflows only; Express executions cannot be stopped."
+    },
+    {
+      "name": "support___get_order_status",
+      "params": [
+        "orderId"
+      ],
+      "description": "注文の状態（商品・金額・配送状況・配達日）を取得する"
+    },
+    {
+      "name": "support___issue_coupon",
+      "params": [
+        "orderId",
+        "reason"
+      ],
+      "description": "お詫びのクーポンを発行する"
+    },
+    {
+      "name": "support___search_faq",
+      "params": [
+        "query"
+      ],
+      "description": "よくある質問（返金・送料・配送）を検索する"
+    }
+  ],
+  "Q1": {
+    "start_schema_has_stateMachineArn": false,
+    "start_schema": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "description": "The string that contains the JSON input data of the execution. Length constraints apply to the payload size and are expressed as bytes in UTF-8 encoding.",
+          "type": "string"
+        }
+      }
+    },
+    "normal_call": {
+      "isError": false,
+      "text": "[{\"type\": \"text\", \"text\": \"{\\\"executionArn\\\":\\\"arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:44ec6489-cba2-4541-b4af-edde97d6351c\\\",\\\"startDate\\\":1.<account>E9}\"}]"
+    },
+    "override_pinned_arn": {
+      "isError": true,
+      "text": "[{\"type\": \"text\", \"text\": \"IllegalArgumentException - Invalid request parameters: cannot set parameter(s): [/stateMachineArn]\"}]"
+    },
+    "override_list_executions": {
+      "isError": true,
+      "text": "[{\"type\": \"text\", \"text\": \"IllegalArgumentException - Invalid request parameters: cannot set parameter(s): [/stateMachineArn]\"}]"
+    }
+  },
+  "Q2": {
+    "DescribeExecution_other_sm": {
+      "isError": true,
+      "text": "[{\"type\": \"text\", \"text\": \"DependencyFailedException - {\\\"errorType\\\":\\\"com.amazon.coral.service#AccessDeniedException\\\",\\\"errorMessage\\\":\\\"User: arn:aws:sts::<account>:assumed-role/gwsfn-gateway-role/gateway-session-invocation is not authorized to perform: states:DescribeExecution on resource: arn:"
+    },
+    "GetExecutionHistory_other_sm": {
+      "isError": true,
+      "text": "[{\"type\": \"text\", \"text\": \"DependencyFailedException - {\\\"errorType\\\":\\\"com.amazon.coral.service#AccessDeniedException\\\",\\\"errorMessage\\\":\\\"User: arn:aws:sts::<account>:assumed-role/gwsfn-gateway-role/gateway-session-invocation is not authorized to perform: states:GetExecutionHistory on resource: ar"
+    },
+    "StopExecution_other_sm": {
+      "isError": true,
+      "text": "[{\"type\": \"text\", \"text\": \"DependencyFailedException - {\\\"errorType\\\":\\\"com.amazon.coral.service#AccessDeniedException\\\",\\\"errorMessage\\\":\\\"User: arn:aws:sts::<account>:assumed-role/gwsfn-gateway-role/gateway-session-invocation is not authorized to perform: states:StopExecution on resource: arn:aws:"
+    },
+    "other_sm_execution_status_after": "RUNNING",
+    "DescribeExecution_own_sm": {
+      "isError": false,
+      "text": "[{\"type\": \"text\", \"text\": \"{\\\"executionArn\\\":\\\"arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:44ec6489-cba2-4541-b4af-edde97d6351c\\\",\\\"name\\\":\\\"44ec6489-cba2-4541-b4af-edde97d6351c\\\",\\\"redriveCount\\\":0,\\\"redriveStatus\\\":\\\"NOT_REDRIVABLE\\\",\\\"redriveStatusReason\\\":\\\"Execution is SUCCEEDED and cannot be redriven\\\",\\\"startDate\\\":1.<account>E9,\\\"stateMachineArn\\\":\\\"arn:aws:states:us-west-2:<"
+    }
+  }
+}
