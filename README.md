@@ -149,7 +149,7 @@ Memory を自動作成する場合、実行ロールに `bedrock-agentcore:ListE
 
 ### 5. モデルについて
 
-当初は Claude 5 系で測る予定でしたが、検証アカウントでは `not available for this account` になりました。そのため Claude Sonnet 4.6 で測っています。モデルは `-c modelId=...` で差し替えられます。
+Claude Sonnet 4.6 で測っています。モデルは `-c modelId=...` で差し替えられます。
 
 ### 6. 接続先パラメータの公開は `$.name` と書く
 
