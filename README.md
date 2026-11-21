@@ -82,6 +82,45 @@ Amazon Bedrock AgentCore Gateway に、Step Functions が組み込みの Connect
 
 > 1 回目の測定は Harness の Memory を有効にしたまま行い、方向A の正解数は 32/36 でした（[results/summary.memory-on.md](results/summary.memory-on.md)）。理由は次の節を参照してください。
 
+### Q5. 同じ返金依頼が 2 回届いたとき、返金ワークフローは何回起動するか
+
+「ORD-1001 が壊れていたので返金してください」を 2 回送り、`gwsfn-refund` の実行件数を測定前後の `ListExecutions` の差分で数えました。各条件 3 回です。方向A は Memory 無効、`actorId` は全条件で同じ値を渡しています。スクリプトは [scripts/q5_duplicate.py](scripts/q5_duplicate.py)、結果は [results/q5_duplicate.json](results/q5_duplicate.json) です。
+
+| 条件 | 2 回目の送り方 | `gwsfn-refund` の実行件数 | 2 回目の `StartExecution` | 2 回目に実行を照会した回数 |
+|---|---|---|---|---|
+| A-1 | 同じセッションで同じ文 | 1 / 1 / 1 | 0/3 | 3/3（`ListExecutions` / `DescribeExecution`） |
+| A-2 | 別のセッションで同じ文 | 2 / 2 / 2 | 3/3 | 0/3 |
+| A-3 | 同じセッションで「さっきの返金、念のためもう一度お願いします」 | 2 / 2 / 2 | 3/3 | 0/3 |
+| A-1N | A-1 と同じ。`name` を公開したターゲットだけを使う | 1 / 1 / 1 | 0/3 | 1/3 |
+| B（名前なし） | `gwsfn-triage` をもう一度起動 | 2 / 2 / 2 | - | - |
+| B（同名・1 回目の完了後） | 同じ実行名・同じ input で起動 | 1 / 1 / 1 | `ExecutionAlreadyExists` 3/3 | - |
+| B（同名・1 回目の実行中） | 同じ実行名・同じ input で起動 | 1 / 1 / 1 | 1 回目と同じ `executionArn` 3/3 | - |
+
+方向A で二重起動を防いだのは、同じセッションの会話履歴だけでした。A-1 の 2 回目は「先ほど同じご依頼を受け付け、すでに返金ワークフローを開始しております。重複して申請しないよう、現在の実行状況を確認いたします」と答え、実行を照会してから止めています。
+
+セッションが変わると、エージェントには前の依頼が見えません（A-2）。A-3 では「念のため再度、返金ワークフローを開始します」と答え、照会せずに 2 件目を起動しました。3 回中 2 回は「同じ注文に対して 2 件の申請が重複している可能性がございます」と書いており、重複に気づいたうえで起動しています。
+
+A-1N では、`refund` ターゲットとは別に、同じ `gwsfn-refund` にピン留めした `refund-named` ターゲットを作り、`StartExecution` の `name` を公開しました（`-c refundNamedTarget=on`）。旧ターゲットは `InvokeHarness` の `allowedTools` で外しています。6 回の `StartExecution`（1 回目のターン 3 回、2 回目は呼ばれず）で、LLM が `name` を渡した回は 0 でした。ツールの説明に冪等性のことを書いていないため、`name` を公開するだけでは使われません。2 回目を止めたのは A-1 と同じく会話履歴で、うち 2 回は照会もせずに「重複申請を避けるため、新たなワークフローは開始しません」と答えました。
+
+方向B では、Step Functions の実行名がそのまま冪等キーになります。1 回目の完了後は `ExecutionAlreadyExists` が返り、実行中に同名・同 input で呼ぶと 1 回目と同じ `executionArn` が返りました。どちらも子の `gwsfn-refund` は 1 件だけです。実行名を指定しなければ、2 件起動します。
+
+### Q6. ワークフローの完了に時間が掛かるとき、どう待つか
+
+`-c refundDelaySec=60` で `gwsfn-refund` の判定前に 60 秒の Wait ステートを入れ、S1（ORD-1001 の返金）を方向ごとに 3 回流しました。承認待ちなど、結果がすぐ返らない状況の模擬です。比較のため、Wait なし（既定）でも同じ測定をしました。スクリプトは [scripts/q6_wait.py](scripts/q6_wait.py)、結果は [results/q6_wait.json](results/q6_wait.json) です。
+
+| 方向 | Wait | 所要時間（3 回） | 照会ツールの呼び出し | エージェントが返った時点の子実行 | 最終回答 |
+|---|---|---|---|---|---|
+| A | 60 秒 | 7.7 / 7.0 / 8.4 秒 | 0 / 0 / 0 | RUNNING 3/3 | 受付済み 3/3 |
+| A | なし | 7.6 / 9.0 / 6.8 秒 | 0 / 0 / 0 | SUCCEEDED 3/3 | 受付済み 3/3 |
+| B | 60 秒 | 65.2 / 65.2 / 65.4 秒 | - | - | - |
+| B | なし | 5.2 / 5.8 / 5.8 秒 | - | - | - |
+
+方向A のエージェントは、Wait の有無に関係なく `StartExecution` の直後に返答しました。`DescribeExecution` などでのポーリングは 6 回とも 0 回です。返答は「返金ワークフローを開始しました。返金の可否はワークフローにて審査されます。審査結果が確定次第、ご登録のメールアドレスへご連絡いたします」のような受付の文面でした。この構成にメールで知らせる仕組みはありません。
+
+方向B は、親の `gwsfn-triage` が `startExecution.sync:2` で子の完了を待つため、所要時間がそのまま 60 秒延びました。延びたのは `StartRefund` ステート（61.5〜61.8 秒）だけで、`invokeHarness` の `Classify` ステートは 3.4〜3.9 秒で変わりません。`invokeHarness` は子を起動する前に終わっているため、`Classify` の `TimeoutSeconds: 180` や Harness の `timeoutSeconds` には掛かりません。タイムアウトの記録もありませんでした。
+
+Q5 / Q6 も測定日は 2026-11-21、us-west-2、`us.anthropic.claude-sonnet-4-6`、boto3 1.44.8 です。測定後は既定の構成（name 非公開・Wait なし）に戻しています。
+
 ## 気づいた点
 
 ### 1. 自動作成の Memory は既定で全利用者が同じ名前空間を共有する
@@ -112,6 +151,12 @@ Memory を自動作成する場合、実行ロールに `bedrock-agentcore:ListE
 
 当初は Claude 5 系で測る予定でしたが、検証アカウントでは `not available for this account` になりました。そのため Claude Sonnet 4.6 で測っています。モデルは `-c modelId=...` で差し替えられます。
 
+### 6. 接続先パラメータの公開は `$.name` と書く
+
+`parameterOverrides` の `path` は、API リファレンスでは JSON Pointer（例 `/numberOfResults`）と説明されています。しかし Step Functions コネクタの `StartExecution` で `/name` を指定すると、`parameterOverride path '/name' is not a recognized override` で拒否されました。`/traceHeader`、`ListExecutions` の `/maxResults`、既定で見える `/input` も同じでした。
+
+通ったのは JSONPath 形式の `$.name` です。`$.bogus` は拒否されるため、フィールド名は検証されています。`$.name` を指定すると、`tools/list` の `StartExecution` に `name`（説明は "The name of the execution."）が加わりました（2026-11-21 時点）。
+
 ## 動かし方
 
 前提は以下のとおりです。
@@ -126,6 +171,10 @@ npm ci
 npx cdk deploy --outputs-file ../outputs.json
 # モデルや Memory を変えるとき
 # npx cdk deploy --outputs-file ../outputs.json -c modelId=us.anthropic.claude-sonnet-4-6 -c harnessMemory=on
+# Q5 の A-1N（name を公開したターゲットを足す）
+# npx cdk deploy --outputs-file ../outputs.json -c refundNamedTarget=on
+# Q6（返金ワークフローの判定前に 60 秒待つ）
+# npx cdk deploy --outputs-file ../outputs.json -c refundDelaySec=60
 ```
 
 ```bash
@@ -135,6 +184,10 @@ uv run python q1_q2_authz.py          # Q1 / Q2
 uv run python q3_direction_a.py 3     # 方向A（12 シナリオ × 3 回）
 uv run python q4_direction_b.py 3     # 方向B
 uv run python summarize.py            # results/summary.md を作る
+uv run python q5_duplicate.py 3 A1,A2,A3,B   # Q5（既定の構成で）
+uv run python q5_duplicate.py 3 A1N          # Q5 の A-1N（-c refundNamedTarget=on で）
+uv run python q6_wait.py delay60 3           # Q6（-c refundDelaySec=60 で）
+uv run python q6_wait.py delay0 3            # Q6 の比較（既定の構成で）
 ```
 
 結果の JSON は、ARN 中のアカウント ID を `<account>` に置き換えてから書き出します。

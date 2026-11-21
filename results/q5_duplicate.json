@@ -1,0 +1,768 @@
+[
+  {
+    "cond": "A1",
+    "run": 0,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.3,
+        "reply": "ご不便をおかけして申し訳ございません。注文状況の確認と返金ワークフローの開始を同時に行います。承りました。以下の内容で返金ワークフローを開始しました。\n\n| 項目 | 内容 |\n|------|------|\n| 注文番号 | ORD-1001 |\n| 商品 | ワイヤレスイヤホン |\n| 金額 | ¥3,000 |\n| 配達日 | 2026年11月15日（5日前） |\n| 返金理由 | 商品が破損していた |\n\n返金の可否はワークフローにて審査されます。結果が確定次第、ご登録のメールアドレスへご連絡いたします。ご不便をおかけして大変申し訳ございません。他にご不明な点がございましたら、お気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "ListExecutions",
+          "ListExecutions",
+          "DescribeExecution"
+        ],
+        "start_count": 0,
+        "start_inputs": [],
+        "looked_up_executions": true,
+        "seconds": 12.1,
+        "reply": "先ほど同じご依頼を受け付け、すでに返金ワークフローを開始しております。重複して申請しないよう、現在の実行状況を確認いたします。先ほどのワークフローの結果を確認します。すでに先ほどの返金ワークフローが**承認・完了済み**です。重複申請は行いません。\n\n---\n\n**ORD-1001 の返金結果**\n\n| 項目 | 内容 |\n|------|------|\n| 注文番号 | ORD-1001 |\n| 返金金額 | ¥3,000 |\n| ステータス | ✅ **返金承認済み（REFUNDED）** |\n\n返金は既に承認されております。ご返金の反映までしばらくお待ちください。他にご不明な点がございましたら、お気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 1,
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:c7e1ebde-be23-4ea3-aa0e-380ee2604ceb"
+    ]
+  },
+  {
+    "cond": "A1",
+    "run": 1,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 6.7,
+        "reply": "ご不便をおかけして申し訳ございません。注文状況の確認と返金ワークフローの開始を同時に行います。返金ワークフローを開始しました。内容は以下の通りです。\n\n| 項目 | 内容 |\n|------|------|\n| **注文番号** | ORD-1001 |\n| **商品** | ワイヤレスイヤホン |\n| **金額** | 3,000円 |\n| **配達日** | 2026年11月15日（5日前） |\n| **返金理由** | 商品が壊れていた |\n\n返金の可否はワークフローにて審査されます。結果が出次第、ご連絡いたします。ご迷惑をおかけして誠に申し訳ございませんでした。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "ListExecutions",
+          "ListExecutions"
+        ],
+        "start_count": 0,
+        "start_inputs": [],
+        "looked_up_executions": true,
+        "seconds": 6.7,
+        "reply": "先ほど同じ注文に対して返金ワークフローを開始済みです。現在の進捗を確認します。先ほど開始した返金ワークフローの結果を確認しました。\n\n**ORD-1001 の返金申請はすでに処理済み（SUCCEEDED）です。**\n\n重複して申請を行う必要はございません。審査結果については別途ご連絡が届く予定です。その他ご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 1,
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:43d02923-2420-409f-87f4-de1afc447884"
+    ]
+  },
+  {
+    "cond": "A1",
+    "run": 2,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.0,
+        "reply": "かしこまりました。まず注文内容を確認しつつ、返金ワークフローを開始します。返金ワークフローを開始しました。内容は以下の通りです。\n\n| 項目 | 内容 |\n|---|---|\n| **注文番号** | ORD-1001 |\n| **商品** | ワイヤレスイヤホン |\n| **金額** | 3,000円 |\n| **配達日** | 2026年11月15日（5日前） |\n| **返金理由** | 商品が壊れていた |\n| **ワークフロー受付** | ✅ 完了 |\n\n返金の可否はワークフローによって自動審査されます。結果が出次第、ご登録のメールアドレスへご連絡いたします。ご不便をおかけして申し訳ございませんでした。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "DescribeExecution"
+        ],
+        "start_count": 0,
+        "start_inputs": [],
+        "looked_up_executions": true,
+        "seconds": 4.4,
+        "reply": "先ほど同じご依頼で返金ワークフローを既に開始しております。現在審査中ですので、結果をお待ちください。\n\n念のため現在の実行状況を確認します。ご安心ください。先ほど開始した返金ワークフローは既に **完了（SUCCEEDED）** しています。\n\n重複して新たなワークフローを起動する必要はありませんので、このままお待ちください。結果はご登録のメールアドレスへお届けされます。他にご不明点があればお気軽にどうぞ。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 1,
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:fa3b144b-6eb3-489e-80ef-9dfea1a29030"
+    ]
+  },
+  {
+    "cond": "A2",
+    "run": 0,
+    "same_session": false,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.5,
+        "reply": "かしこまりました。まず注文の状態を確認しながら、返金ワークフローを開始します。ご注文の確認と返金手続きを開始しました。以下の通りです。\n\n---\n\n**📦 注文情報**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **金額:** ¥3,000\n- **配送状況:** 配達済み（2026年11月15日、5日前）\n\n---\n\n**💳 返金手続き**\n- 返金ワークフローを開始しました。\n- 返金の可否はワークフローにて審査されます。\n- 結果が確定次第、ご連絡いたします。\n\n商品が壊れた状態でお届けしてしまい、大変申し訳ございません。ご不便をおかけしております。他にご不明な点がございましたら、お気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.0,
+        "reply": "承知しました。注文の確認と返金ワークフローの開始を同時に行います。返金ワークフローを開始しました。内容は以下の通りです。\n\n| 項目 | 内容 |\n|---|---|\n| 注文番号 | ORD-1001 |\n| 商品 | ワイヤレスイヤホン |\n| 金額 | ¥3,000 |\n| 配達日 | 2026年11月15日（5日前） |\n| 返金理由 | 商品が壊れていた |\n\n返金の可否はワークフローにて審査されます。結果が確定次第、ご登録のメールアドレスへご連絡いたします。ご不便をおかけして申し訳ございません。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 2,
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:b6c1b9d3-64b7-4702-ab81-91385524cadc",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:db8159a1-322a-4fe4-a1a6-36c1e936624a"
+    ]
+  },
+  {
+    "cond": "A2",
+    "run": 1,
+    "same_session": false,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.2,
+        "reply": "かしこまりました。ORD-1001の注文状況を確認しつつ、返金ワークフローを開始します。ご注文の内容と返金手続きの状況をお伝えします。\n\n---\n\n**ご注文内容**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **金額:** ¥3,000\n- **配達日:** 2026年11月15日（5日前）\n\n---\n\n**返金手続き**\n「商品が壊れていた」という理由で返金ワークフローを開始しました。返金の可否はシステムにて審査されます。結果が確定次第、ご連絡いたします。\n\nご不便をおかけして大変申し訳ございません。他にご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 6.8,
+        "reply": "かしこまりました。まず注文内容を確認し、返金ワークフローを開始します。ご注文内容と返金ワークフローの開始を確認しました。以下の通りです。\n\n---\n\n**ご注文情報**\n- 注文番号：ORD-1001\n- 商品：ワイヤレスイヤホン\n- 金額：¥3,000\n- 配送状況：配達済み（2026年11月15日、5日前）\n\n**返金申請**\n- 理由：商品が壊れていた\n- ステータス：返金ワークフローを開始しました ✅\n\n---\n\n返金の可否はワークフローにて審査されます。結果が出次第、改めてご連絡いたします。ご不便をおかけして申し訳ございません。他にご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 2,
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:12e285ee-9aa2-4406-8af9-6e1715dbb6ed",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:264ba74e-25a7-48e0-89bf-a00b45bbed37"
+    ]
+  },
+  {
+    "cond": "A2",
+    "run": 2,
+    "same_session": false,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 8.2,
+        "reply": "承知しました。注文状況の確認と返金ワークフローの開始を同時に行います。返金ワークフローを開始しました。内容は以下の通りです。\n\n| 項目 | 内容 |\n|------|------|\n| 注文番号 | ORD-1001 |\n| 商品 | ワイヤレスイヤホン |\n| 金額 | ¥3,000 |\n| 配達日 | 2026年11月15日（5日前） |\n| 返金理由 | 商品が壊れていた |\n| ワークフロー受付 | ✅ 完了 |\n\n返金の可否はワークフローにて審査されます。結果が出次第、ご連絡いたします。ご不便をおかけして大変申し訳ございません。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 6.5,
+        "reply": "承知しました。注文状況の確認と返金ワークフローの開始を同時に行います。返金ワークフローを開始しました。内容は以下の通りです。\n\n| 項目 | 内容 |\n|------|------|\n| 注文番号 | ORD-1001 |\n| 商品 | ワイヤレスイヤホン |\n| 金額 | ¥3,000 |\n| 配達日 | 2026年11月15日（5日前） |\n| 返金理由 | 商品が破損していた |\n\n返金の可否はワークフローにて審査されます。結果が確定次第、ご連絡いたします。ご不便をおかけして大変申し訳ございません。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 2,
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:7a5469da-4dfe-47ea-88a2-104abe4893b2",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:801c5332-bcd0-4264-aeb7-7e99505e2d8b"
+    ]
+  },
+  {
+    "cond": "A3",
+    "run": 0,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.1,
+        "reply": "かしこまりました。まず注文の状態を確認しながら、返金ワークフローを開始します。ご注文の確認と返金手続きを開始しました。以下の通りです。\n\n---\n\n**📦 注文情報**\n- 注文番号：ORD-1001\n- 商品：ワイヤレスイヤホン\n- 金額：3,000円\n- 配送状況：配達済み（2026年11月15日、5日前）\n\n**💸 返金ワークフロー**\n- 理由：商品が破損していた\n- ステータス：**申請を受け付けました**（審査中）\n\n---\n\n返金の可否はワークフローによる審査で決定されます。結果が出次第、ご連絡いたします。ご不便をおかけして申し訳ございません。他にご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "さっきの返金、念のためもう一度お願いします",
+        "tools": [
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 3.9,
+        "reply": "かしこまりました。念のため再度、返金ワークフローを開始します。ORD-1001（ワイヤレスイヤホン／破損）の返金ワークフローを再度開始しました。\n\nただし、**同じ注文に対して2件の申請が重複している**可能性がございます。審査の結果によっては二重処理となる場合がありますので、もし不要であればお知らせください。最初の申請をキャンセルすることも可能です。\n\n他にご不明な点があればお気軽にどうぞ！",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 2,
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:178b4fe3-7e4b-45f2-b01e-a30b4569c2be",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:a551daf6-a3d7-40e0-9cb5-72ad21879694"
+    ]
+  },
+  {
+    "cond": "A3",
+    "run": 1,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.7,
+        "reply": "かしこまりました。ORD-1001 の注文状況を確認しつつ、返金ワークフローを開始します。ご注文内容と返金手続きの状況をお伝えします。\n\n**ご注文内容**\n| 項目 | 内容 |\n|---|---|\n| 注文番号 | ORD-1001 |\n| 商品 | ワイヤレスイヤホン |\n| 金額 | 3,000円 |\n| 配達日 | 2026年11月15日（5日前） |\n\n**返金手続き**\n返金ワークフローを開始しました。**「商品が破損していた」** という理由で審査が進められます。審査結果はメールにてご連絡いたします。\n\nご不便をおかけして申し訳ございません。何かご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "さっきの返金、念のためもう一度お願いします",
+        "tools": [
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 3.8,
+        "reply": "かしこまりました。念のため、再度返金ワークフローを開始します。ORD-1001 の返金ワークフローを再度開始しました。\n\nただ、**同じ注文に対して返金申請が2件走っている**状態となっております。二重処理となる可能性がありますので、ご注意ください。審査結果はメールにてご連絡いたします。ご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 2,
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:8ef9daf5-d1e5-43b2-8e1f-f0a1e679c446",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:ede8227d-194f-4ec0-ad6c-67355efbd302"
+    ]
+  },
+  {
+    "cond": "A3",
+    "run": 2,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 6.9,
+        "reply": "注文状況の確認と返金ワークフローの開始を同時に行います。ご注文の確認と返金手続きを開始しました。以下の通りです。\n\n---\n\n**📦 注文情報**\n- **注文番号**: ORD-1001\n- **商品**: ワイヤレスイヤホン\n- **金額**: ¥3,000\n- **配送状況**: 配達済み（2026年11月15日、5日前）\n\n**💳 返金手続き**\n- 「商品が壊れていた」という理由で返金ワークフローを開始しました。\n- 返金の可否はシステムが審査・判定いたします。\n- 結果が確定次第、ご登録のメールアドレスへご連絡いたします。\n\nご不便をおかけして申し訳ございません。他にご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "さっきの返金、念のためもう一度お願いします",
+        "tools": [
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 3.3,
+        "reply": "かしこまりました。改めて返金ワークフローを開始します。ORD-1001 の返金ワークフローを再度開始しました。\n\n- **理由**: 商品が壊れていた\n- **ステータス**: 審査中\n\n結果はご登録のメールアドレスへご連絡いたします。他にご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 2,
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:017ac7fd-4a1c-4590-a200-e1444ef66b1f",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:b79b8b0e-df9d-4973-9814-96cb058af0b9"
+    ]
+  },
+  {
+    "cond": "B_noname",
+    "run": 0,
+    "execution_name": null,
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:bc6458a7-6aa0-4886-b029-366dbc2c1179",
+      "startDate": "2026-11-21T08:47:39.484000+09:00"
+    },
+    "second": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:b0023da5-e645-4cd0-b3eb-caf45a3087eb",
+      "startDate": "2026-11-21T08:47:39.652000+09:00"
+    },
+    "same_execution_returned": false,
+    "triage_executions": 2,
+    "triage_status": [
+      "SUCCEEDED",
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW",
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:0f214804-84b7-4747-96b4-4386f3c07b20",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:660d3c1c-f64c-4c29-bdad-d6c531cdd567"
+    ]
+  },
+  {
+    "cond": "B_noname",
+    "run": 1,
+    "execution_name": null,
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:a9ca489d-7ea9-4617-b2c9-16cdf11ddd45",
+      "startDate": "2026-11-21T08:47:52.144000+09:00"
+    },
+    "second": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:b6b7f71f-d217-4432-9165-2e5c2bbfe049",
+      "startDate": "2026-11-21T08:47:52.309000+09:00"
+    },
+    "same_execution_returned": false,
+    "triage_executions": 2,
+    "triage_status": [
+      "SUCCEEDED",
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW",
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:60382412-f904-4917-97cb-0382baf2f8f6",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:b3111021-8aee-4fea-a232-649208fb29bd"
+    ]
+  },
+  {
+    "cond": "B_noname",
+    "run": 2,
+    "execution_name": null,
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:e1b56282-c309-46b3-82fe-1053ef07fb47",
+      "startDate": "2026-11-21T08:48:04.883000+09:00"
+    },
+    "second": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:8418dcc6-8f5c-4bbd-ab6b-41ebbaaca3b7",
+      "startDate": "2026-11-21T08:48:05.108000+09:00"
+    },
+    "same_execution_returned": false,
+    "triage_executions": 2,
+    "triage_status": [
+      "SUCCEEDED",
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW",
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 2,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:1d430118-1ff4-45ba-a3f1-865acab35dc5",
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:92db7d2a-4cbf-43c0-b620-664c161d9e83"
+    ]
+  },
+  {
+    "cond": "B_name_after_done",
+    "run": 0,
+    "execution_name": "q5-B_name_after_done-0-1795218497",
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_after_done-0-1795218497",
+      "startDate": "2026-11-21T08:48:17.634000+09:00"
+    },
+    "second": {
+      "ok": false,
+      "error": "ExecutionAlreadyExists",
+      "message": "Execution Already Exists: 'arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_after_done-0-1795218497'"
+    },
+    "same_execution_returned": false,
+    "triage_executions": 1,
+    "triage_status": [
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:c2eb346c-c426-4912-be1a-022cbf5bf11c"
+    ]
+  },
+  {
+    "cond": "B_name_after_done",
+    "run": 1,
+    "execution_name": "q5-B_name_after_done-1-1795218510",
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_after_done-1-1795218510",
+      "startDate": "2026-11-21T08:48:30.378000+09:00"
+    },
+    "second": {
+      "ok": false,
+      "error": "ExecutionAlreadyExists",
+      "message": "Execution Already Exists: 'arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_after_done-1-1795218510'"
+    },
+    "same_execution_returned": false,
+    "triage_executions": 1,
+    "triage_status": [
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:a8b11f90-f7b6-437d-abe9-993ab24fb207"
+    ]
+  },
+  {
+    "cond": "B_name_after_done",
+    "run": 2,
+    "execution_name": "q5-B_name_after_done-2-1795218523",
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_after_done-2-1795218523",
+      "startDate": "2026-11-21T08:48:43.496000+09:00"
+    },
+    "second": {
+      "ok": false,
+      "error": "ExecutionAlreadyExists",
+      "message": "Execution Already Exists: 'arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_after_done-2-1795218523'"
+    },
+    "same_execution_returned": false,
+    "triage_executions": 1,
+    "triage_status": [
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:0ea36a33-4173-447d-8479-d7525312e629"
+    ]
+  },
+  {
+    "cond": "B_name_while_running",
+    "run": 0,
+    "execution_name": "q5-B_name_while_running-0-1795218536",
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_while_running-0-1795218536",
+      "startDate": "2026-11-21T08:48:56.176000+09:00"
+    },
+    "second": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_while_running-0-1795218536",
+      "startDate": "2026-11-21T08:48:56.176000+09:00"
+    },
+    "same_execution_returned": true,
+    "triage_executions": 1,
+    "triage_status": [
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:7ed9b0ac-5672-489b-9c8c-d832e43e527a"
+    ]
+  },
+  {
+    "cond": "B_name_while_running",
+    "run": 1,
+    "execution_name": "q5-B_name_while_running-1-1795218548",
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_while_running-1-1795218548",
+      "startDate": "2026-11-21T08:49:08.629000+09:00"
+    },
+    "second": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_while_running-1-1795218548",
+      "startDate": "2026-11-21T08:49:08.629000+09:00"
+    },
+    "same_execution_returned": true,
+    "triage_executions": 1,
+    "triage_status": [
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:c2754ef0-073f-40cf-a42a-d1c2a3a931ae"
+    ]
+  },
+  {
+    "cond": "B_name_while_running",
+    "run": 2,
+    "execution_name": "q5-B_name_while_running-2-1795218561",
+    "first": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_while_running-2-1795218561",
+      "startDate": "2026-11-21T08:49:21.163000+09:00"
+    },
+    "second": {
+      "ok": true,
+      "executionArn": "arn:aws:states:us-west-2:<account>:execution:gwsfn-triage:q5-B_name_while_running-2-1795218561",
+      "startDate": "2026-11-21T08:49:21.163000+09:00"
+    },
+    "same_execution_returned": true,
+    "triage_executions": 1,
+    "triage_status": [
+      "SUCCEEDED"
+    ],
+    "routed": [
+      "REFUND_WORKFLOW"
+    ],
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:825c121f-47a2-4b05-8e16-3606200acb6a"
+    ]
+  },
+  {
+    "cond": "A1N",
+    "run": 0,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が破損していた\\\"}\"}"
+        ],
+        "start_targets": [
+          "refund-named"
+        ],
+        "start_results": [
+          "{\"executionArn\":\"arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:a4d7ee02-49d4-41b3-b3d4-616bac7f3ec0\",\"startDate\":1.795218967184E9}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.7,
+        "reply": "かしこまりました。まず注文の状態を確認しながら、返金ワークフローを開始いたします。ご注文の内容と返金ワークフローの開始を確認しました。\n\n---\n\n**ご注文情報**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **金額:** 3,000円\n- **配送状況:** 配達済み（2026年11月15日）\n\n**返金申請について**\n「商品が破損していた」という理由で返金ワークフローを開始しました。審査の結果は改めてご連絡いたします。\n\n返金の可否はワークフローにて判定されます。審査完了までしばらくお待ちください。ご不便をおかけして申し訳ございません。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "ListExecutions",
+          "ListExecutions",
+          "DescribeExecution"
+        ],
+        "start_count": 0,
+        "start_inputs": [],
+        "start_targets": [],
+        "start_results": [],
+        "looked_up_executions": true,
+        "seconds": 19.0,
+        "reply": "先ほど同じご依頼でワークフローを開始済みです。現在の実行状況を確認いたします。先ほどのワークフロー（`a4d7ee02-...`）がすでに**完了（SUCCEEDED）**しています。重複して再申請する必要はございません。\n\n審査結果の詳細を確認いたします。ご安心ください。先ほどの申請の審査が完了しており、**返金が承認されました！**\n\n---\n\n**返金審査結果**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **返金金額:** **3,000円**\n- **ステータス:** ✅ 返金承認済み（REFUNDED）\n\n返金の手続きは完了しています。ご不便をおかけして大変申し訳ございませんでした。返金の反映までしばらくお待ちください。他にご不明な点がございましたら、お気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 1,
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:a4d7ee02-49d4-41b3-b3d4-616bac7f3ec0"
+    ]
+  },
+  {
+    "cond": "A1N",
+    "run": 1,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "start_targets": [
+          "refund-named"
+        ],
+        "start_results": [
+          "{\"executionArn\":\"arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:e89ab1f0-94fa-4e85-a91d-c6ba64df433e\",\"startDate\":1.795218998854E9}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 7.1,
+        "reply": "ご不便をおかけして申し訳ございません。注文状況の確認と返金ワークフローの開始を同時に行います。承りました。以下の内容で返金申請を受け付けました。\n\n| 項目 | 内容 |\n|------|------|\n| 注文番号 | ORD-1001 |\n| 商品 | ワイヤレスイヤホン |\n| 金額 | ¥3,000 |\n| 配達日 | 2026年11月15日 |\n| 返金理由 | 商品が壊れていた |\n\n返金ワークフローを開始しました。返金の可否はシステムにて審査されます。結果はご登録のメールアドレスにお知らせいたします。ご不便をおかけして大変申し訳ございません。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [],
+        "start_count": 0,
+        "start_inputs": [],
+        "start_targets": [],
+        "start_results": [],
+        "looked_up_executions": false,
+        "seconds": 2.1,
+        "reply": "先ほど同じ内容で返金申請を受け付けております。重複申請を避けるため、新たなワークフローは開始しません。\n\n審査結果はご登録のメールアドレスにお知らせいたします。しばらくお待ちください。ご不便をおかけして大変申し訳ございません。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 1,
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:e89ab1f0-94fa-4e85-a91d-c6ba64df433e"
+    ]
+  },
+  {
+    "cond": "A1N",
+    "run": 2,
+    "same_session": true,
+    "turns": [
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [
+          "get_order_status",
+          "StartExecution"
+        ],
+        "start_count": 1,
+        "start_inputs": [
+          "{\"input\": \"{\\\"orderId\\\": \\\"ORD-1001\\\", \\\"reason\\\": \\\"商品が壊れていた\\\"}\"}"
+        ],
+        "start_targets": [
+          "refund-named"
+        ],
+        "start_results": [
+          "{\"executionArn\":\"arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:f18fe55b-a463-4a75-bcae-4cd94a7d7cb6\",\"startDate\":1.795219013061E9}"
+        ],
+        "looked_up_executions": false,
+        "seconds": 6.5,
+        "reply": "ご不便をおかけして申し訳ございません。注文状況の確認と返金ワークフローの開始を同時に行います。ご注文内容と返金申請の状況をお知らせします。\n\n---\n\n**ご注文情報**\n- 注文番号：ORD-1001\n- 商品：ワイヤレスイヤホン\n- 金額：3,000円\n- 配送状況：配達済み（2026年11月15日、5日前）\n\n---\n\n**返金申請について**\n「商品が壊れていた」という理由で返金ワークフローを開始しました。審査の結果は改めてご連絡いたします。\n\n他にご不明な点がございましたら、お気軽にお申し付けください。",
+        "errors": []
+      },
+      {
+        "message": "ORD-1001 が壊れていたので返金してください",
+        "tools": [],
+        "start_count": 0,
+        "start_inputs": [],
+        "start_targets": [],
+        "start_results": [],
+        "looked_up_executions": false,
+        "seconds": 2.2,
+        "reply": "先ほど同じ内容で返金ワークフローをすでに開始しております。現在審査中ですので、結果をお待ちください。\n\n重複した申請を避けるため、追加の申請は行いません。結果についてご不明な点があればお気軽にお申し付けください。",
+        "errors": []
+      }
+    ],
+    "start_tool_uses": 1,
+    "refund_executions": 1,
+    "refund_execution_arns": [
+      "arn:aws:states:us-west-2:<account>:execution:gwsfn-refund:f18fe55b-a463-4a75-bcae-4cd94a7d7cb6"
+    ]
+  }
+]

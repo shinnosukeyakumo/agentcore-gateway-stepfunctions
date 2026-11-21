@@ -29,6 +29,10 @@ export class GwSfnStack extends cdk.Stack {
     const { account, region } = cdk.Stack.of(this);
     // モデルは `cdk deploy -c modelId=...` で差し替えられる
     const MODEL_ID: string = this.node.tryGetContext('modelId') ?? 'us.anthropic.claude-sonnet-4-6';
+    // Q6 用: `-c refundDelaySec=60` で返金ワークフローの判定前に Wait を入れる（承認待ちなど、時間が掛かる状況の模擬）
+    const REFUND_DELAY_SEC = Number(this.node.tryGetContext('refundDelaySec') ?? 0);
+    // Q5 用: `-c refundNamedTarget=on` で StartExecution の name を公開した別ターゲットを足す
+    const REFUND_NAMED_TARGET = this.node.tryGetContext('refundNamedTarget') === 'on';
 
     // ------------------------------------------------------------------
     // Lambda: 架空の注文データ（Gateway のツール / ワークフローの照会）
@@ -70,8 +74,11 @@ export class GwSfnStack extends cdk.Stack {
           Resource: 'arn:aws:states:::lambda:invoke',
           Arguments: { FunctionName: lookupFn.functionArn, Payload: { orderId: '{% $states.input.orderId %}' } },
           Output: '{% $states.result.Payload %}',
-          Next: 'CheckEligibility',
+          Next: REFUND_DELAY_SEC > 0 ? 'WaitBeforeDecision' : 'CheckEligibility',
         },
+        ...(REFUND_DELAY_SEC > 0
+          ? { WaitBeforeDecision: { Type: 'Wait', Seconds: REFUND_DELAY_SEC, Next: 'CheckEligibility' } }
+          : {}),
         CheckEligibility: {
           Type: 'Choice',
           Choices: [
@@ -207,6 +214,40 @@ export class GwSfnStack extends cdk.Stack {
     });
     refundTarget.node.addDependency(gatewayRolePolicy);
 
+    // Q5 用: 同じ gwsfn-refund にピン留めし、StartExecution の name だけ公開したターゲット。
+    // 既定では作らない。測定時は InvokeHarness の allowedTools で refund ターゲット側を外す
+    let refundNamedTarget: agentcore.CfnGatewayTarget | undefined;
+    if (REFUND_NAMED_TARGET) {
+      refundNamedTarget = new agentcore.CfnGatewayTarget(this, 'RefundNamedTarget', {
+        gatewayIdentifier: gateway.attrGatewayIdentifier,
+        name: 'refund-named',
+        credentialProviderConfigurations: [{ credentialProviderType: 'GATEWAY_IAM_ROLE' }],
+        targetConfiguration: {
+          mcp: {
+            connector: {
+              source: { connectorId: 'states' },
+              configurations: [
+                {
+                  name: 'StartExecution',
+                  parameterValues: pin,
+                  // API リファレンスは JSON Pointer（/name）と書くが、2026-11-21 時点で通るのは JSONPath（$.name）だけだった
+                  parameterOverrides: [{ path: '$.name', visible: true }],
+                  description:
+                    '返金ワークフローを開始する。顧客が返金を求めたときだけ使う。input は {"orderId": "ORD-xxxx", "reason": "理由"} の JSON 文字列。返金の可否と承認要否はワークフローが判定する。',
+                },
+                { name: 'ListExecutions', parameterValues: pin },
+                { name: 'DescribeStateMachine', parameterValues: pin },
+                { name: 'DescribeExecution' },
+                { name: 'GetExecutionHistory' },
+                { name: 'StopExecution' },
+              ],
+            },
+          },
+        },
+      });
+      refundNamedTarget.node.addDependency(gatewayRolePolicy);
+    }
+
     // ------------------------------------------------------------------
     // Harness（方向A: Gateway のツールを使うサポートエージェント）
     // ------------------------------------------------------------------
@@ -262,6 +303,7 @@ export class GwSfnStack extends cdk.Stack {
       timeoutSeconds: 300,
     });
     supportHarness.node.addDependency(harnessRolePolicy, supportTarget, refundTarget);
+    if (refundNamedTarget) supportHarness.node.addDependency(refundNamedTarget);
 
     // Harness（方向B: 分類だけ。ツールは持たせない）
     const triageHarness = new agentcore.CfnHarness(this, 'TriageHarness', {

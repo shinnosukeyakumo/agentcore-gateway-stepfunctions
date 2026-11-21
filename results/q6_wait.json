@@ -1,0 +1,266 @@
+[
+  {
+    "label": "delay60",
+    "direction": "A",
+    "run": 0,
+    "seconds": 7.7,
+    "tools": [
+      "get_order_status",
+      "StartExecution"
+    ],
+    "start_count": 1,
+    "poll_count": 0,
+    "poll_tools": [],
+    "statuses_seen_by_agent": [],
+    "exec_status_when_agent_returned": "RUNNING",
+    "refund_final_result": "REFUNDED",
+    "reply_kind": "ACCEPTED",
+    "reply": "かしこまりました。まず注文の状態を確認しつつ、返金ワークフローを開始します。ご注文内容と返金ワークフローの開始を確認しました。\n\n---\n\n**📦 注文情報**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **金額:** ¥3,000\n- **配送状況:** 配達済み（2026年11月15日、5日前）\n\n---\n\n**💳 返金申請について**\n返金ワークフローを開始しました。**返金の可否はワークフローにて審査**されます。審査結果が確定次第、ご登録のメールアドレスへご連絡いたします。\n\n破損した商品が届いてしまい、大変ご不便をおかけして申し訳ございません。何かご不明な点があればお気軽にお申し付けください。",
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 238,
+      "totalTokens": 4432,
+      "cacheReadInputTokens": 3820,
+      "cacheWriteInputTokens": 373
+    },
+    "errors": []
+  },
+  {
+    "label": "delay60",
+    "direction": "A",
+    "run": 1,
+    "seconds": 7.0,
+    "tools": [
+      "get_order_status",
+      "StartExecution"
+    ],
+    "start_count": 1,
+    "poll_count": 0,
+    "poll_tools": [],
+    "statuses_seen_by_agent": [],
+    "exec_status_when_agent_returned": "RUNNING",
+    "refund_final_result": "REFUNDED",
+    "reply_kind": "ACCEPTED",
+    "reply": "かしこまりました。まず注文の状態を確認しつつ、返金ワークフローを開始します。ご注文内容と返金ワークフローの状況をお伝えします。\n\n---\n\n**📦 注文情報**\n- 注文番号：ORD-1001\n- 商品：ワイヤレスイヤホン\n- 金額：¥3,000\n- お届け日：2026年11月15日（配達から5日）\n- ステータス：配達済み\n\n**🔄 返金ワークフロー**\n- 返金申請を受け付け、ワークフローを開始しました。\n- 返金の可否はシステムが自動で審査します。結果が出次第、ご連絡いたします。\n\n破損品が届いてしまい、大変ご不便をおかけして申し訳ございません。審査結果をお待ちください。ご不明な点があればお気軽にお申し付けください。",
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 251,
+      "totalTokens": 4444,
+      "cacheReadInputTokens": 3820,
+      "cacheWriteInputTokens": 372
+    },
+    "errors": []
+  },
+  {
+    "label": "delay60",
+    "direction": "A",
+    "run": 2,
+    "seconds": 8.4,
+    "tools": [
+      "get_order_status",
+      "StartExecution"
+    ],
+    "start_count": 1,
+    "poll_count": 0,
+    "poll_tools": [],
+    "statuses_seen_by_agent": [],
+    "exec_status_when_agent_returned": "RUNNING",
+    "refund_final_result": "REFUNDED",
+    "reply_kind": "ACCEPTED",
+    "reply": "返金ワークフローを開始するために、まず注文の状態を確認しつつ、並行して返金手続きを開始します。ご不便をおかけして大変申し訳ございません。以下の内容を確認し、返金手続きを開始しました。\n\n---\n\n**📦 注文情報**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **金額:** ¥3,000\n- **配達日:** 2026年11月15日（5日前）\n\n---\n\n**💰 返金手続き**\n返金ワークフローを開始しました。**返金の可否はワークフローによって審査**されます。審査結果が確定次第、ご登録のメールアドレスへご連絡いたします。\n\n破損品が届いてしまい、本当に申し訳ございませんでした。何かご不明な点があればお気軽にお申し付けください。",
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 242,
+      "totalTokens": 4443,
+      "cacheReadInputTokens": 3820,
+      "cacheWriteInputTokens": 380
+    },
+    "errors": []
+  },
+  {
+    "label": "delay60",
+    "direction": "B",
+    "run": 0,
+    "status": "SUCCEEDED",
+    "seconds": 65.2,
+    "states": {
+      "Classify": 3.4,
+      "ParseIntent": 0.0,
+      "Route": 0.0,
+      "StartRefund": 61.8,
+      "_timeouts": []
+    },
+    "routed": "REFUND_WORKFLOW",
+    "refund_final_result": "REFUNDED",
+    "error": null,
+    "cause": ""
+  },
+  {
+    "label": "delay60",
+    "direction": "B",
+    "run": 1,
+    "status": "SUCCEEDED",
+    "seconds": 65.2,
+    "states": {
+      "Classify": 3.6,
+      "ParseIntent": 0.0,
+      "Route": 0.0,
+      "StartRefund": 61.6,
+      "_timeouts": []
+    },
+    "routed": "REFUND_WORKFLOW",
+    "refund_final_result": "REFUNDED",
+    "error": null,
+    "cause": ""
+  },
+  {
+    "label": "delay60",
+    "direction": "B",
+    "run": 2,
+    "status": "SUCCEEDED",
+    "seconds": 65.4,
+    "states": {
+      "Classify": 3.9,
+      "ParseIntent": 0.0,
+      "Route": 0.0,
+      "StartRefund": 61.5,
+      "_timeouts": []
+    },
+    "routed": "REFUND_WORKFLOW",
+    "refund_final_result": "REFUNDED",
+    "error": null,
+    "cause": ""
+  },
+  {
+    "label": "delay0",
+    "direction": "A",
+    "run": 0,
+    "seconds": 7.6,
+    "tools": [
+      "get_order_status",
+      "StartExecution"
+    ],
+    "start_count": 1,
+    "poll_count": 0,
+    "poll_tools": [],
+    "statuses_seen_by_agent": [],
+    "exec_status_when_agent_returned": "SUCCEEDED",
+    "refund_final_result": "REFUNDED",
+    "reply_kind": "ACCEPTED",
+    "reply": "かしこまりました。まず注文の状態を確認しながら、返金ワークフローを開始します。ご注文の確認と返金ワークフローの開始が完了しました。\n\n---\n\n**📦 注文情報**\n- 注文番号：ORD-1001\n- 商品：ワイヤレスイヤホン\n- 金額：3,000円\n- 配送状況：配達済み（2026年11月16日）\n\n**🔄 返金手続き**\n返金ワークフローを開始しました。返金の可否はシステムが審査・判定いたします。結果が出次第、改めてご連絡いたします。\n\n破損品が届いてしまい、大変ご不便をおかけして申し訳ございません。何かご不明な点がございましたら、お気軽にお申し付けください。",
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 221,
+      "totalTokens": 4416,
+      "cacheReadInputTokens": 3820,
+      "cacheWriteInputTokens": 374
+    },
+    "errors": []
+  },
+  {
+    "label": "delay0",
+    "direction": "A",
+    "run": 1,
+    "seconds": 9.0,
+    "tools": [
+      "get_order_status",
+      "StartExecution"
+    ],
+    "start_count": 1,
+    "poll_count": 0,
+    "poll_tools": [],
+    "statuses_seen_by_agent": [],
+    "exec_status_when_agent_returned": "SUCCEEDED",
+    "refund_final_result": "REFUNDED",
+    "reply_kind": "ACCEPTED",
+    "reply": "かしこまりました。まず注文の状態を確認しつつ、返金ワークフローを開始します。ご注文の内容と返金ワークフローの開始状況をお伝えします。\n\n---\n\n**📦 注文情報**\n- **注文番号:** ORD-1001\n- **商品:** ワイヤレスイヤホン\n- **金額:** ¥3,000\n- **配達日:** 2026年11月16日（5日前）\n\n---\n\n**💳 返金申請について**\n返金ワークフローを開始しました。審査の結果は改めてご連絡いたします。\n\n破損した状態での到着は大変ご不便をおかけしました。申し訳ございません。審査完了まで今しばらくお待ちください。何かご不明な点があればお気軽にお申し付けください。",
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 219,
+      "totalTokens": 4413,
+      "cacheReadInputTokens": 3820,
+      "cacheWriteInputTokens": 373
+    },
+    "errors": []
+  },
+  {
+    "label": "delay0",
+    "direction": "A",
+    "run": 2,
+    "seconds": 6.8,
+    "tools": [
+      "get_order_status",
+      "StartExecution"
+    ],
+    "start_count": 1,
+    "poll_count": 0,
+    "poll_tools": [],
+    "statuses_seen_by_agent": [],
+    "exec_status_when_agent_returned": "SUCCEEDED",
+    "refund_final_result": "REFUNDED",
+    "reply_kind": "ACCEPTED",
+    "reply": "返金のご要望を承りました。まず注文の確認と返金ワークフローを同時に開始します。ご注文の内容と返金ワークフローの状況をお伝えします。\n\n---\n\n**ご注文内容**\n- 注文番号：ORD-1001\n- 商品：ワイヤレスイヤホン\n- 金額：3,000円\n- お届け日：2026年11月16日（5日前）\n\n---\n\n**返金手続きについて**\n\n「商品が破損した状態で届いた」というご理由で返金ワークフローを開始しました。審査の結果は改めてご連絡いたします。\n\nご不便をおかけして大変申し訳ございません。他にご不明な点がございましたら、お気軽にお申し付けください。",
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 207,
+      "totalTokens": 4394,
+      "cacheReadInputTokens": 3820,
+      "cacheWriteInputTokens": 366
+    },
+    "errors": []
+  },
+  {
+    "label": "delay0",
+    "direction": "B",
+    "run": 0,
+    "status": "SUCCEEDED",
+    "seconds": 5.2,
+    "states": {
+      "Classify": 3.6,
+      "ParseIntent": 0.0,
+      "Route": 0.0,
+      "StartRefund": 1.5,
+      "_timeouts": []
+    },
+    "routed": "REFUND_WORKFLOW",
+    "refund_final_result": "REFUNDED",
+    "error": null,
+    "cause": ""
+  },
+  {
+    "label": "delay0",
+    "direction": "B",
+    "run": 1,
+    "status": "SUCCEEDED",
+    "seconds": 5.8,
+    "states": {
+      "Classify": 4.0,
+      "ParseIntent": 0.0,
+      "Route": 0.0,
+      "StartRefund": 1.7,
+      "_timeouts": []
+    },
+    "routed": "REFUND_WORKFLOW",
+    "refund_final_result": "REFUNDED",
+    "error": null,
+    "cause": ""
+  },
+  {
+    "label": "delay0",
+    "direction": "B",
+    "run": 2,
+    "status": "SUCCEEDED",
+    "seconds": 5.8,
+    "states": {
+      "Classify": 3.9,
+      "ParseIntent": 0.0,
+      "Route": 0.0,
+      "StartRefund": 1.9,
+      "_timeouts": []
+    },
+    "routed": "REFUND_WORKFLOW",
+    "refund_final_result": "REFUNDED",
+    "error": null,
+    "cause": ""
+  }
+]

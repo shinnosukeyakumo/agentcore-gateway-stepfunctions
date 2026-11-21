@@ -26,6 +26,11 @@ def invoke(sid: str, message: str) -> tuple[list[dict], str, dict | None, list]:
         runtimeSessionId=f"{sid}-{uuid.uuid4()}",
         messages=[{"role": "user", "content": [{"text": message}]}],
     )
+    return parse_stream(resp)
+
+
+def parse_stream(resp) -> tuple[list[dict], str, dict | None, list]:
+    """InvokeHarness のストリームから、ツール呼び出し・結果・最終テキストを取り出す。"""
     open_blocks: dict[int, dict] = {}
     blocks, text, usage, errors = [], [], None, []
     for ev in resp["stream"]:
